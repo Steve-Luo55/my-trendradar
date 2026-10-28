@@ -41,7 +41,6 @@ STYLE = '''<style>
 .site-nav{max-width:1200px;margin:0 auto 16px;display:flex;flex-wrap:wrap;gap:8px;font:14px/1.5 system-ui,sans-serif}
 .site-nav a{padding:9px 14px;border:1px solid #e2e8f0;border-radius:8px;color:#334155;background:#fff;text-decoration:none}
 .site-nav a:hover,.site-nav a:focus-visible{color:#4f46e5;border-color:#818cf8;outline:2px solid transparent}
-@media screen and (min-width:900px){.container{max-width:1200px}}
 @media screen and (max-width:480px){.site-nav{gap:6px}.site-nav a{padding:8px 10px;font-size:12px}}
 </style>'''
 
