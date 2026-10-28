@@ -140,6 +140,7 @@ rss:
     - id: "yahoo-finance"
       name: "雅虎财经"
       url: "https://finance.yahoo.com/news/rssindex"
+      enabled: false                  # 此默认 RSS 地址返回 404，暂不抓取
 
     # 自定义源示例
     # - id: "custom-feed"
@@ -312,7 +313,7 @@ storage:
   # - auto: 自动选择（GitHub Actions 且配置了远程存储 → remote，否则 → local）
   # - local: 本地 SQLite + TXT/HTML 文件
   # - remote: 远程云存储（S3 兼容协议，支持 R2/OSS/COS 等）
-  backend: "auto"
+  backend: "local"                   # 当前榜单使用任务临时磁盘；历史记录需另配远程存储
 
   # 数据格式选项
   formats:

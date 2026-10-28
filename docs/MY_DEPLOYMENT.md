@@ -9,12 +9,13 @@
 
 基于官方 TrendRadar v6.11.0 模板，每小时第 33 分钟抓取一次，显示北京时间。
 GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电脑关机也能运行。
-关键词、11 个热榜平台和 RSS 来源采用官方默认配置，修改 `config/frequency_words.txt`
-和 `config/config.yaml` 即可调整。
+关键词、11 个热榜平台采用官方默认配置，RSS 启用 Hacker News。
+官方默认雅虎财经 RSS 地址返回 404，已停用；阮一峰 RSS 沿用默认停用设置。
+修改 `config/frequency_words.txt` 和 `config/config.yaml` 即可调整。
 
 当前使用关键词筛选，AI 分析和 AI 翻译关闭，无需大模型 API 密钥。
 网页只发布当次生成的 HTML，不公开数据库或密钥。
-未配置远程存储时，每次任务使用临时数据库，网页展示当前榜单，
+当前存储后端为 `local`，每次任务使用临时数据库，网页展示当前榜单，
 不提供跨次运行的历史记录或可靠的增量去重。
 
 ## 接通消息推送
@@ -49,4 +50,4 @@ GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电
 运行 **Actions → Get Hot News → Run workflow** 可以立即更新网页。
 抓取或网页发布失败时查看对应步骤日志，旧网页会保持上次成功内容。
 部分信源可能临时不可用，网页会标明失败平台。
-需要历史记录时按官方文档配置 S3 兼容远程存储。
+需要历史记录时按官方文档配置 S3 兼容远程存储，并将 `storage.backend` 改为 `auto` 或 `remote`。
