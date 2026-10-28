@@ -7,7 +7,7 @@
 
 ## 当前配置
 
-基于官方 TrendRadar v6.11.0 模板，每小时第 33 分钟抓取一次，显示北京时间。
+基于官方 TrendRadar v6.11.0 模板，每小时第 37 分钟抓取一次，显示北京时间。
 GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电脑关机也能运行。
 关键词、11 个热榜平台采用官方默认配置，RSS 启用 Hacker News。
 官方默认雅虎财经 RSS 地址返回 404，已停用；阮一峰 RSS 沿用默认停用设置。
@@ -33,6 +33,8 @@ GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电
 | ntfy | `NTFY_TOPIC`；私有服务器另配 `NTFY_SERVER_URL`、`NTFY_TOKEN` |
 
 邮件使用邮箱提供的 SMTP 授权码；可另配 `EMAIL_SMTP_SERVER` 和 `EMAIL_SMTP_PORT`。
+本部署使用 QQ 邮箱（支持 `foxmail.com` 别名），已通过 Secrets 显式设置
+`EMAIL_SMTP_SERVER=smtp.qq.com`、`EMAIL_SMTP_PORT=465`，以 SSL 连接发送。
 不要将 Webhook、邮箱授权码或 API 密钥提交到公开仓库。
 
 保存密钥后，在 **Actions → Test Notifications → Run workflow** 发送一条测试消息。
