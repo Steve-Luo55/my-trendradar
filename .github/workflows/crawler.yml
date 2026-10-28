@@ -46,6 +46,7 @@ concurrency:
 permissions:
   contents: read
   actions: write
+  pages: read
 
 jobs:
   crawl:
@@ -169,6 +170,23 @@ jobs:
           GITHUB_ACTIONS: true
         run: uv run python -m trendradar
 
+      - name: Prepare GitHub Pages report
+        run: |
+          # Publish only the report generated in this run, never databases or config.
+          test -s output/index.html
+          mkdir -p pages_dist
+          cp output/index.html pages_dist/index.html
+          touch pages_dist/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages report
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: pages_dist
+          retention-days: 1
+
       # --------------------------------------------------------------------------------
       # ☁️ CLOUDFLARE PAGES DEPLOY / 部署到 Cloudflare Pages（可选）
       # --------------------------------------------------------------------------------
@@ -213,3 +231,18 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy cloudflare_dist --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+
+  deploy:
+    needs: crawl
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

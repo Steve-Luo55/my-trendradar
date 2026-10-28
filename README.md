@@ -1,3 +1,5 @@
+> **Steve 的个人部署**：[打开热点网页](https://steve-luo55.github.io/my-trendradar/) · [运行状态](https://github.com/Steve-Luo55/my-trendradar/actions) · [配置推送与每周签到](docs/MY_DEPLOYMENT.md)
+
 <div align="center" id="trendradar">
 
 <a href="https://github.com/sansan0/TrendRadar" title="TrendRadar">
