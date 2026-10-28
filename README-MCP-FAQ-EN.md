@@ -59,48 +59,10 @@ The following optimization strategies are adopted by default, mainly to save AI 
 **💡 Tip:** This project provides a dedicated date parsing tool that can accurately parse natural language date expressions like "last 7 days", "this week", ensuring all AI models get consistent date ranges. See Q18 below for details.
 
 
-## 💰 AI Models
+## AI model configuration
 
-Below I use the **[SiliconFlow](https://cloud.siliconflow.cn)** platform as an example, which has many large models to choose from. During the development and testing of this project, I used this platform for many functional tests and validations.
-
-### 📊 Registration Method Comparison
-
-| Registration Method | Direct Registration Without Referral | Registration With Referral Link |
-|:-------:|:-------:|:-----------------:|
-| Registration Link | [siliconflow.cn](https://cloud.siliconflow.cn) | [Referral Link](https://cloud.siliconflow.cn/i/fqnyVaIU) |
-| Free Quota | 0 tokens | **20 million tokens** (≈$2) |
-| Extra Benefits | ❌ | ✅ Referrer also gets 20 million tokens |
-
-> 💡 **Tip**: The above gift quota should allow for **200+ queries**
-
-
-### 🚀 Quick Start
-
-#### 1️⃣ Register and Get API Key
-
-1. Complete registration using the link above
-2. Visit [API Key Management Page](https://cloud.siliconflow.cn/me/account/ak)
-3. Click "Create New API Key"
-4. Copy the generated key (please keep it safe)
-
-#### 2️⃣ Configure in Cherry Studio
-
-1. Open **Cherry Studio**
-2. Go to "Model Service" settings
-3. Find "SiliconFlow"
-4. Paste the copied key into the **[API Key]** input box
-5. Ensure the checkbox in the top right corner shows **green** when enabled ✅
-
----
-
-### ✨ Configuration Complete!
-
-Now you can start using this project and enjoy stable and fast AI services!
-
-After testing one query, please immediately check the [SiliconFlow Billing](https://cloud.siliconflow.cn/me/bills) to see the consumption and have an estimate in mind.
-
-
----
+Configure your chosen model provider, model name, and API key in the MCP client. This repository includes no registration referrals or promotional credit offers.
+The deployed instance does not enable AI analysis, translation, or filtering. For setup, consult the [upstream technical documentation](https://trendradar.sandev.cc/en/docs/) and keep API keys in server-side configuration or GitHub Secrets.
 
 ## Basic Queries
 

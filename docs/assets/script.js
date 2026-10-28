@@ -43,54 +43,6 @@ function syncScroll(textareaId, backdropId) {
     }
 }
 
-// ==========================================
-// 12. 二维码放大弹窗逻辑
-// ==========================================
-
-function getQrModalData() {
-    return {
-        weixin: {
-            icon: '<i class="fa-brands fa-weixin text-green-600"></i>',
-            iconBg: 'bg-green-100',
-            title: t('qr.weixin.title'),
-            subtitle: t('qr.weixin.subtitle'),
-            img: './assets/weixin.webp',
-            alt: '微信公众号',
-            hint: t('qr.weixin.hint')
-        },
-        donate: {
-            icon: '<i class="fa-solid fa-hand-holding-heart text-emerald-600"></i>',
-            iconBg: 'bg-emerald-100',
-            title: t('qr.donate.title'),
-            subtitle: t('qr.donate.subtitle'),
-            img: 'https://cdn-1258574687.cos.ap-shanghai.myqcloud.com/img/%2F2026%2F01%2F18ecce7c224ce0ea4c59394c29e408f8-e0d1db45.webp',
-            alt: '微信支付',
-            hint: t('qr.donate.hint')
-        }
-    };
-}
-
-function openQrModal(type) {
-    const data = getQrModalData()[type];
-    if (!data) return;
-    const modal = document.getElementById('qr-modal');
-    document.getElementById('qr-modal-icon').className = 'w-10 h-10 rounded-xl flex items-center justify-center text-lg ' + data.iconBg;
-    document.getElementById('qr-modal-icon').innerHTML = data.icon;
-    document.getElementById('qr-modal-title').textContent = data.title;
-    document.getElementById('qr-modal-subtitle').textContent = data.subtitle;
-    document.getElementById('qr-modal-img').src = data.img;
-    document.getElementById('qr-modal-img').alt = data.alt;
-    document.getElementById('qr-modal-hint').textContent = data.hint;
-    modal.classList.remove('hidden');
-}
-
-function closeQrModal() {
-    const modal = document.getElementById('qr-modal');
-    if (modal) modal.classList.add('hidden');
-}
-
-window.openQrModal = openQrModal;
-window.closeQrModal = closeQrModal;
 const MODULE_DEFS = [
     { id: 1, nameKey: "mod.app", key: "app", editable: false },
     { id: 2, nameKey: "mod.platforms", key: "platforms", editable: true },
@@ -111,7 +63,7 @@ const MODULE_DEFS = [
 function getInitialYaml() { return t('init.configPlaceholder'); }
 const INITIAL_YAML = `# 在此粘贴你的 config.yaml...
 # 或拖拽文件到编辑器区域
-# 或点击右上角"加载官网最新配置"`;
+# 或点击右上角"加载仓库当前配置"`;
 
 // LocalStorage 键名
 const STORAGE_KEY_CONFIG = 'trendradar_config_yaml';
@@ -121,15 +73,15 @@ const STORAGE_KEY_CONFIG_TIME = 'trendradar_config_time';
 const STORAGE_KEY_FREQUENCY_TIME = 'trendradar_frequency_time';
 const STORAGE_KEY_TIMELINE_TIME = 'trendradar_timeline_time';
 
-// 官网配置文件 URL（GitHub 主源）
-const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/';
+// Same-origin, credential-free snapshot of this deployment's configuration.
+const GITHUB_RAW_BASE = new URL('./', document.baseURI).href;
 const REMOTE_VERSION_URL = GITHUB_RAW_BASE + 'version_configs';
 
 // 远程配置文件路径随当前语言切换：中文用 config.yaml，英文用 config.en.yaml 等
 // 仅文件名不同，复用同一上游仓库与 CDN 回退源
 function remoteConfigPath(type) {
     const en = (typeof getLang === 'function' && getLang() === 'en');
-    const suffix = en ? '.en' : '';
+    const suffix = ''; // UI language must not switch to a different runtime configuration.
     const names = {
         config: 'config/config' + suffix + '.yaml',
         frequency: 'config/frequency_words' + suffix + '.txt',
@@ -149,9 +101,6 @@ function remoteConfigName(type) {
 // 所有源（GitHub 主源 + CDN 备用源），按优先级排列
 const ALL_SOURCES = [
     GITHUB_RAW_BASE,
-    'https://fastly.jsdelivr.net/gh/sansan0/TrendRadar@master/',
-    'https://cdn.jsdelivr.net/gh/sansan0/TrendRadar@master/',
-    'https://gcore.jsdelivr.net/gh/sansan0/TrendRadar@master/',
 ];
 let lastOkIndex = 0;
 
@@ -202,6 +151,33 @@ let currentTab = "config";
 let configSaveTimer = null;
 let frequencySaveTimer = null;
 let timelineSaveTimer = null;
+
+async function loadInitialRepositoryConfig() {
+    const fields = [
+        ['config', 'yaml-editor', 'init.configPlaceholder'],
+        ['frequency', 'frequency-editor', 'init.frequencyPlaceholder'],
+        ['timeline', 'timeline-editor', 'init.timelinePlaceholder'],
+    ];
+    await Promise.all(fields.map(async ([type, id, placeholder]) => {
+        const editor = document.getElementById(id);
+        const initial = editor.value;
+        if (initial.trim() && initial !== t(placeholder)) return;
+        try {
+            const response = await fetchWithTimeout(remoteConfigUrl(type));
+            if (!response.ok) throw new Error(String(response.status));
+            const value = await response.text();
+            // Do not overwrite a restored draft or typing that happened during loading.
+            if (editor.value !== initial) return;
+            editor.value = value;
+            if (type === 'config') { currentYaml = value; syncYamlToUI(); }
+            if (type === 'frequency') { currentFrequency = value; currentFrequencyData = null; syncFrequencyToUI(); }
+            if (type === 'timeline') { currentTimeline = value; syncTimelineToUI(); }
+            updateBackdrop(id, type === 'config' ? 'yaml-backdrop' : type === 'frequency' ? 'frequency-backdrop' : 'timeline-backdrop');
+        } catch (error) {
+            showToast(t('toast.loadFailed') + remoteConfigName(type), 'warning');
+        }
+    }));
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const yamlEditor = document.getElementById('yaml-editor');
@@ -298,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBackdrop('timeline-editor', 'timeline-backdrop');
 
     updateSaveTimeDisplay();
+    loadInitialRepositoryConfig();
 });
 
 // 防抖保存 config.yaml
@@ -606,7 +583,7 @@ window.openLoadConfigModal = function() {
             </div>
             <div class="text-xs text-gray-400 mt-3 p-2 bg-gray-50 rounded">
                 <i class="fa-solid fa-info-circle mr-1"></i>
-                ${t('loadModal.source')}<a href="https://github.com/sansan0/TrendRadar" target="_blank" class="text-blue-500 hover:underline">sansan0/TrendRadar</a>
+                ${t('loadModal.source')}<a href="https://github.com/Steve-Luo55/my-trendradar" target="_blank" class="text-blue-500 hover:underline">Steve-Luo55/my-trendradar</a>
             </div>
             <div class="flex justify-end gap-2 mt-4">
                 <button onclick="closeLoadConfigModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">${t('loadModal.cancel')}</button>
@@ -5839,15 +5816,4 @@ function reorderDayPlanPeriods(presetName, planKey, orderedKeys) {
 
     clearTimeout(window._tlRenderTimer);
     window._tlRenderTimer = setTimeout(() => syncTimelineToUI(), 500);
-}
-
-// ==========================================
-// 支持侧栏 折叠/展开
-// ==========================================
-function toggleSupportSidebar() {
-    const wrap = document.querySelector('.support-sidebar-wrap');
-    const btn = document.getElementById('sidebar-toggle-btn');
-    const isCollapsed = wrap.classList.toggle('collapsed');
-    btn.classList.toggle('is-collapsed', isCollapsed);
-    btn.title = isCollapsed ? t('sidebar.expand') : t('sidebar.collapse');
 }

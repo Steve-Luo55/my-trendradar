@@ -22,7 +22,7 @@
     add([
         ['nav.subtitle', '可视化配置编辑器', 'Visual Config Editor'],
         ['nav.privacy', '纯静态页面，数据仅保存在你的本地浏览器，请放心使用', 'Static page — data is stored only in your browser'],
-        ['nav.loadLatest', '加载官网最新配置', 'Load Latest Config'],
+        ['nav.loadLatest', '加载仓库当前配置', 'Load Repository Config'],
         ['nav.copyConfig', '复制配置', 'Copy Config'],
         ['nav.copied', '已复制!', 'Copied!'],
     ]);
@@ -238,7 +238,7 @@
     //  Load Config Modal
     // ═══════════════════════════════════════
     add([
-        ['loadModal.title', '加载官网最新配置', 'Load Latest Config'],
+        ['loadModal.title', '加载仓库当前配置', 'Load Repository Config'],
         ['loadModal.desc', '选择要从 GitHub 加载的配置文件：', 'Select config files to load from GitHub:'],
         ['loadModal.configDesc', '系统配置、平台、AI、通知等', 'System config, platforms, AI, notifications, etc.'],
         ['loadModal.frequencyDesc', '关键词组、过滤规则、正则逻辑', 'Keyword groups, filter rules, regex logic'],
@@ -368,36 +368,12 @@
     //  Sidebar
     // ═══════════════════════════════════════
     add([
-        ['sidebar.title', '支持项目', 'Support'],
-        ['sidebar.quote', '若 TrendRadar 曾为你捕捉价值，不妨为它注入动力，助其持续进化', 'If TrendRadar has been valuable to you, help fuel its growth'],
-        ['sidebar.star', '点亮 Star', 'Star Us'],
-        ['sidebar.starDesc', '让更多人发现它', 'Help others discover it'],
-        ['sidebar.goGithub', '前往 GitHub', 'Go to GitHub'],
-        ['sidebar.follow', '不迷路', 'Stay Updated'],
-        ['sidebar.followDesc', '获取更新通知', 'Get update notifications'],
-        ['sidebar.scanFollow', '扫码关注公众号', 'Scan to follow on WeChat'],
-        ['sidebar.donate', '随心赞赏', 'Donate'],
-        ['sidebar.donateDesc', '1 元也是鼓励', 'Every bit helps'],
-        ['sidebar.scanDonate', '微信扫码 · 丰俭由人', 'WeChat scan · any amount'],
-        ['sidebar.explore', '探索更多', 'Explore More'],
-        ['sidebar.exploreDesc', '另一个用心的作品', 'Another well-crafted project'],
-        ['sidebar.goExplore', '去看看', 'Check it out'],
-        ['sidebar.footer', '"开源不易，感谢支持"', '"Open source isn\'t easy — thanks for your support"'],
-        ['sidebar.clickEnlarge', '点击放大', 'Click to enlarge'],
-        ['sidebar.expand', '展开侧栏', 'Expand sidebar'],
-        ['sidebar.collapse', '收起侧栏', 'Collapse sidebar'],
     ]);
 
     // ═══════════════════════════════════════
     //  QR Modal
     // ═══════════════════════════════════════
     add([
-        ['qr.weixin.title', '不迷路', 'Stay Updated'],
-        ['qr.weixin.subtitle', '第一时间获取更新通知', 'Get notified of updates first'],
-        ['qr.weixin.hint', '微信扫码关注公众号', 'Scan to follow our WeChat account'],
-        ['qr.donate.title', '随心赞赏', 'Donate'],
-        ['qr.donate.subtitle', '金额随意，1 元也是鼓励 (´▽`ʃ♡ƪ)', 'Any amount is an encouragement (´▽`ʃ♡ƪ)'],
-        ['qr.donate.hint', '微信扫码 · 丰俭由人', 'WeChat scan · any amount'],
     ]);
 
     // ═══════════════════════════════════════
@@ -454,7 +430,7 @@
         ['tl.newModeDesc', '创建自定义调度方案', 'Create custom schedule'],
         ['tl.presetNotFound', '未找到预设「{0}」的配置', 'Config for preset "{0}" not found'],
         ['tl.pasteTimeline', '请在左侧粘贴 timeline.yaml 内容', 'Paste timeline.yaml content on the left'],
-        ['tl.orLoadConfig', '或点击右上角「加载官网最新配置」', 'Or click "Load Latest Config" at top right'],
+        ['tl.orLoadConfig', '或点击右上角「加载仓库当前配置」', 'Or click "Load Repository Config" at top right'],
 
         ['tl.defaultConfig', '默认配置 (default)', 'Default Config'],
         ['tl.defaultDesc', '不在任何时间段内时，使用以下配置：', 'Config used when outside any period:'],
@@ -536,9 +512,9 @@
     //  Initial / Placeholder Text
     // ═══════════════════════════════════════
     add([
-        ['init.configPlaceholder', '# 在此粘贴你的 config.yaml...\n# 或拖拽文件到编辑器区域\n# 或点击右上角"加载官网最新配置"', '# Paste your config.yaml here...\n# Or drag a file into the editor\n# Or click "Load Latest Config" at top right'],
+        ['init.configPlaceholder', '# 在此粘贴你的 config.yaml...\n# 或拖拽文件到编辑器区域\n# 或点击右上角"加载仓库当前配置"', '# Paste your config.yaml here...\n# Or drag a file into the editor\n# Or click "Load Repository Config" at top right'],
         ['init.frequencyPlaceholder', '# 在此粘贴你的 frequency_words.txt 内容...\n# 或拖拽文件到编辑器区域\n\n[GLOBAL_FILTER]\n\n[WORD_GROUPS]\n', '# Paste your frequency_words.txt here...\n# Or drag a file into the editor\n\n[GLOBAL_FILTER]\n\n[WORD_GROUPS]\n'],
-        ['init.timelinePlaceholder', '# 在此粘贴你的 timeline.yaml...\n# 或拖拽文件到编辑器区域\n# 或点击右上角"加载官网最新配置"', '# Paste your timeline.yaml here...\n# Or drag a file into the editor\n# Or click "Load Latest Config" at top right'],
+        ['init.timelinePlaceholder', '# 在此粘贴你的 timeline.yaml...\n# 或拖拽文件到编辑器区域\n# 或点击右上角"加载仓库当前配置"', '# Paste your timeline.yaml here...\n# Or drag a file into the editor\n# Or click "Load Repository Config" at top right'],
         ['init.releaseToLoad', '释放以加载文件', 'Release to load file'],
     ]);
 

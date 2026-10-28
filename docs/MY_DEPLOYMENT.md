@@ -1,6 +1,8 @@
 # 我的 TrendRadar
 
 - 网页：<https://steve-luo55.github.io/my-trendradar/>
+- 官方界面的配置编辑器：<https://steve-luo55.github.io/my-trendradar/editor/>
+- 信源与更新说明：<https://steve-luo55.github.io/my-trendradar/sources.html>
 - 仓库：<https://github.com/Steve-Luo55/my-trendradar>
 - 运行与日志：<https://github.com/Steve-Luo55/my-trendradar/actions>
 - 推送密钥：<https://github.com/Steve-Luo55/my-trendradar/settings/secrets/actions>
@@ -17,6 +19,13 @@ GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电
 网页只发布当次生成的 HTML，不公开数据库或密钥。
 当前存储后端为 `local`，每次任务使用临时数据库，网页展示当前榜单，
 不提供跨次运行的历史记录或可靠的增量去重。
+
+## 新闻报告与配置编辑器
+
+网站首页是新闻报告，`/editor/` 是基于上游官方界面的配置编辑器，二者用途不同。
+编辑器首次访问会载入本次部署去除凭据后的配置；已有本机草稿则保留。
+切换中英文只影响界面，不会换成另一套上游默认配置。
+修改只保存在当前浏览器，须导出并提交到仓库的 `config/` 对应文件后，后台任务才会采用。
 
 ## 接通消息推送
 
@@ -41,11 +50,15 @@ GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电
 日志成功并且目标渠道实际收到消息，才算接通。
 此后 **Get Hot News** 每小时会向已配置渠道发送匹配到的当前榜单。
 
-## 每周签到
+## 自动运行与平台限制
 
-保留官方 7 天活跃检测机制。每 7 天内手动运行一次
-**Actions → Check In → Run workflow**。该官方工作流会清理运行记录并重置计时。
-到期后如抓取已停用，先签到，再启用 **Get Hot News** 并手动运行。
+本副本已移除上游工作流中以 `604800` 秒判断的 7 天停用逻辑，
+同时移除会删除运行日志的 Check In 工作流，不再需要每周签到。
+抓取仍为每小时一次；实际执行时间和成功情况请查看 Actions 日志。
+
+GitHub 自身仍可能在公开仓库连续 60 天无活动时停用定时工作流，
+高负载时调度也可能延迟或丢弃。这些平台行为不能通过本项目保证消除。
+参考：https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule
 
 ## 手动更新与排错
 
