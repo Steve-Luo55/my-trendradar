@@ -4,12 +4,19 @@ on:
   schedule:
     # Hourly personal news report; no project-specific trial expiration.
     - cron: "37 * * * *"
+    # Email editions: 08:30 and 20:30 in Asia/Shanghai (UTC+8).
+    - cron: "30 0,12 * * *"
 
   workflow_dispatch:
+    inputs:
+      send_email:
+        description: "本次更新同时发送邮件（平时更新无需勾选）"
+        type: boolean
+        default: false
 
 concurrency:
   group: crawler-${{ github.ref_name }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -52,6 +59,7 @@ jobs:
       - name: Run crawler
         if: success()
         env:
+          NOTIFICATION_ENABLED: ${{ (github.event_name == 'schedule' && github.event.schedule == '30 0,12 * * *') || (github.event_name == 'workflow_dispatch' && inputs.send_email) }}
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

@@ -1220,3 +1220,25 @@ a.sidebar-card:hover {
     opacity: 1;
     transform: translateX(-50%) translateY(-4px);
 }
+
+/* Personal editor: visual controls first, source files are an optional tool. */
+#visual-mode-nav{display:flex;flex-shrink:0;flex-wrap:wrap;align-items:center;gap:6px;padding:10px 20px;background:#fff;border-bottom:1px solid #e2e8f0}
+#visual-mode-nav button{padding:8px 13px;border:1px solid #e2e8f0;border-radius:7px;font-size:13px;color:#475569;background:white}
+#visual-mode-nav button[aria-selected="true"]{background:#eff6ff;color:#1d4ed8;border-color:#93c5fd}
+#visual-mode-nav button:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+#visual-mode-nav #source-toggle{margin-left:auto}
+#source-panel{display:none;width:43%;min-width:0}
+#visual-panel{width:100%;min-width:0}
+body.show-source #source-panel{display:flex}
+body.show-source #visual-panel{width:57%}
+#source-file-tabs{overflow-x:auto;flex-shrink:0}
+#source-file-tabs>*{flex-shrink:0}
+@media(max-width:720px){
+ #editor-toolbar{height:auto;min-height:56px;flex-wrap:wrap;gap:12px;padding:12px}
+ #editor-toolbar>div:last-child{flex-wrap:wrap;gap:10px}
+ #visual-mode-nav{padding:10px 12px}
+ #visual-mode-nav #source-toggle{margin-left:0}
+ body.show-source main{flex-direction:column}
+ body.show-source #source-panel{width:100%;height:42%;flex-shrink:0}
+ body.show-source #visual-panel{width:100%;flex:1;min-height:0}
+}

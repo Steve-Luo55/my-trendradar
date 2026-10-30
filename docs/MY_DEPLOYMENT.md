@@ -1,6 +1,7 @@
 # 我的 TrendRadar
 
-- 网页：<https://steve-luo55.github.io/my-trendradar/>
+- 首页：<https://steve-luo55.github.io/my-trendradar/>
+- 热点阅读：<https://steve-luo55.github.io/my-trendradar/report/>
 - 官方界面的配置编辑器：<https://steve-luo55.github.io/my-trendradar/editor/>
 - 信源与更新说明：<https://steve-luo55.github.io/my-trendradar/sources.html>
 - 仓库：<https://github.com/Steve-Luo55/my-trendradar>
@@ -11,7 +12,7 @@
 
 基于官方 TrendRadar v6.11.0 模板，每小时第 37 分钟抓取一次，显示北京时间。
 GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电脑关机也能运行。
-关键词、11 个热榜平台采用官方默认配置，RSS 启用 Hacker News。
+保留原有 11 个热榜，增加 GitHub Trending；RSS 启用 Google Trends 美国、Hacker News 和 Ars Technica。搜索与科技来源另有不经关键词过滤的展示区，每个源最多 20 条。
 官方默认雅虎财经 RSS 地址返回 404，已停用；阮一峰 RSS 沿用默认停用设置。
 修改 `config/frequency_words.txt` 和 `config/config.yaml` 即可调整。
 
@@ -22,7 +23,7 @@ GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电
 
 ## 新闻报告与配置编辑器
 
-网站首页是新闻报告，`/editor/` 是基于上游官方界面的配置编辑器，二者用途不同。
+网站首页是导航入口，`/report/` 是官方新闻报告，`/editor/` 是基于上游官方界面的配置编辑器。编辑器默认只显示可视化设置，YAML/TXT 源码按需展开。
 编辑器首次访问会载入本次部署去除凭据后的配置；已有本机草稿则保留。
 切换中英文只影响界面，不会换成另一套上游默认配置。
 修改只保存在当前浏览器，须导出并提交到仓库的 `config/` 对应文件后，后台任务才会采用。
@@ -48,7 +49,9 @@ GitHub 定时任务可能延迟。每次成功抓取后更新 GitHub Pages，电
 
 保存密钥后，在 **Actions → Test Notifications → Run workflow** 发送一条测试消息。
 日志成功并且目标渠道实际收到消息，才算接通。
-此后 **Get Hot News** 每小时会向已配置渠道发送匹配到的当前榜单。
+邮件改为每天北京时间 **08:30、20:30** 两次；每小时第 37 分钟的网页更新不再发邮件。GitHub 的定时事件可能延迟或丢弃，时间是计划值，实际执行以 Actions 记录为准。两次邮件是抓取当时的当前榜单，并非当天历史汇总。
+
+手动更新默认不发送邮件；需要测试完整邮件时，可在 **Run workflow** 中勾选 **send_email**。编辑器内的调度模板目前未开启，早晚两个时刻由 GitHub 工作流决定。
 
 ## 自动运行与平台限制
 

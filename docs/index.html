@@ -19,13 +19,13 @@
 
     <div class="px-4 py-2 text-xs text-slate-600 bg-slate-50 border-b border-slate-200 flex-shrink-0">
         基于 <a href="https://github.com/sansan0/TrendRadar" target="_blank" rel="noopener" class="underline">TrendRadar 官方编辑器</a>。草稿仅保存在当前浏览器；导出并提交到仓库后才会影响后台任务。邮件凭据请在 GitHub Secrets 管理。
-        <a href="../" class="text-blue-600 underline ml-2">查看热点报告</a>
+        <a href="../report/" class="text-blue-600 underline ml-2">查看热点报告</a>
     </div>
 
     <!-- 顶部导航 -->
     <nav class="bg-white shadow-sm border-b border-gray-200 flex-shrink-0 z-20">
-        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-            <a href="../" class="flex items-center gap-3 hover:opacity-80 transition-opacity" title="返回热点报告">
+        <div id="editor-toolbar" class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+            <a href="../" class="flex items-center gap-3 hover:opacity-80 transition-opacity" title="返回首页">
                 <i class="fa-solid fa-sliders text-blue-600 text-lg"></i>
                 <span class="font-bold text-lg tracking-tight text-gray-900">TrendRadar <span class="text-gray-500 text-xs font-normal ml-2" data-i18n="nav.subtitle">可视化配置编辑器 </span></span>
             </a>
@@ -52,13 +52,20 @@
         </div>
     </nav>
 
-    <!-- 主界面：左右分栏 -->
+    <div id="visual-mode-nav" role="tablist" aria-label="配置内容">
+        <button type="button" data-editor-tab="config" role="tab" aria-selected="true" onclick="switchTab('config')">可视化设置</button>
+        <button type="button" data-editor-tab="frequency" role="tab" aria-selected="false" onclick="switchTab('frequency')">关键词筛选</button>
+        <button type="button" data-editor-tab="timeline" role="tab" aria-selected="false" onclick="switchTab('timeline')">调度模板</button>
+        <button id="source-toggle" type="button" aria-expanded="false" aria-controls="source-panel" onclick="toggleSourcePanel()">显示源码</button>
+    </div>
+
+    <!-- 主界面：默认只展示可视化设置，源码按需展开 -->
     <main class="flex-grow flex overflow-hidden">
 
         <!-- 左侧：源代码编辑器 (Source) -->
-        <div class="w-1/2 flex flex-col border-r border-gray-200 bg-[#1e1e1e]">
+        <div id="source-panel" class="flex flex-col border-r border-gray-200 bg-[#1e1e1e]">
             <!-- Tab 切换 -->
-            <div class="flex items-center bg-[#252526] border-b border-[#333]">
+            <div id="source-file-tabs" class="flex items-center bg-[#252526] border-b border-[#333]">
                 <button id="tab-config" onclick="switchTab('config')" class="tab-button active px-4 py-2 text-xs font-bold text-gray-300 hover:bg-[#2d2d30] transition-colors border-b-2 border-blue-500">
                     <i class="fa-solid fa-code mr-2"></i>config.yaml
                 </button>
@@ -107,7 +114,7 @@
         </div>
 
         <!-- 右侧：可视化配置 + 支持侧栏 -->
-        <div class="w-1/2 flex">
+        <div id="visual-panel" class="flex">
         <!-- 可视化配置 (Visual) -->
         <div class="flex-1 flex flex-col bg-gray-50 min-w-0">
             <div class="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">

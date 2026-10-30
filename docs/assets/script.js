@@ -1318,8 +1318,18 @@ window.resetToDefault = function() {
 // ==========================================
 // 8. Tab 切换功能
 // ==========================================
+window.toggleSourcePanel = function() {
+    const open = document.body.classList.toggle('show-source');
+    const button = document.getElementById('source-toggle');
+    button.setAttribute('aria-expanded', String(open));
+    button.textContent = open ? '隐藏源码' : '显示源码';
+}
+
 window.switchTab = function(tab) {
     currentTab = tab;
+    document.querySelectorAll('[data-editor-tab]').forEach(button => {
+        button.setAttribute('aria-selected', String(button.dataset.editorTab === tab));
+    });
 
     const activeClass = "tab-button active px-4 py-2 text-xs font-bold text-gray-300 hover:bg-[#2d2d30] transition-colors border-b-2 border-blue-500";
     const inactiveClass = "tab-button px-4 py-2 text-xs font-bold text-gray-500 hover:bg-[#2d2d30] transition-colors border-b-2 border-transparent";

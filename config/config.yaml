@@ -99,6 +99,9 @@ platforms:
     - id: "zhihu"
       name: "知乎"
       expected_domain: "zhihu.com"
+    - id: "github-trending-today"
+      name: "GitHub Trending"
+      expected_domain: "github.com"
 
 
 
@@ -130,6 +133,14 @@ rss:
     - id: "hacker-news"
       name: "Hacker News"
       url: "https://hnrss.org/frontpage"
+
+    - id: "google-trends-us"
+      name: "Google Trends · 美国"
+      url: "https://trends.google.com/trending/rss?geo=US"
+
+    - id: "ars-technica"
+      name: "Ars Technica"
+      url: "https://feeds.arstechnica.com/arstechnica/index"
 
     - id: "ruanyifeng"
       name: "阮一峰的网络日志"
@@ -240,14 +251,14 @@ display:
                                       # 注：热点词汇统计中的新增标记🆕不受此配置影响
 
     rss: true                         # RSS 订阅区域（true=显示并分析, false=隐藏并跳过分析）
-    standalone: false                 # 独立展示区：完整热榜/RSS，不受关键词过滤（true=显示, false=隐藏）
+    standalone: true                  # 搜索与科技趋势完整展示，不受关键词过滤
     ai_analysis: true                 # AI 分析区域（true=显示, false=隐藏）
 
   # 独立展示区：将指定平台/RSS 完整展示，不受关键词过滤
   # 推送展示由 regions.standalone 控制，AI 分析由 ai_analysis.include_standalone 控制
   standalone:
-    platforms: ["zhihu", "wallstreetcn-hot"]     # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
-    rss_feeds: []                                # RSS 源 ID 列表（如 ["hacker-news"]）
+    platforms: ["github-trending-today"]
+    rss_feeds: ["google-trends-us", "hacker-news", "ars-technica"]
     max_items: 20                                # 每个源最多展示条数（0=不限制）
 
 

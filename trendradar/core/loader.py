@@ -90,9 +90,10 @@ def _load_notification_config(config_data: Dict) -> Dict:
     batch_size = advanced.get("batch_size", {})
 
     max_accounts_env = _get_env_int_or_none("MAX_ACCOUNTS_PER_CHANNEL")
+    notification_gate = _get_env_bool("NOTIFICATION_ENABLED")
 
     return {
-        "ENABLE_NOTIFICATION": notification.get("enabled", True),
+        "ENABLE_NOTIFICATION": notification.get("enabled", True) and notification_gate is not False,
         "MESSAGE_BATCH_SIZE": batch_size.get("default", 4000),
         "DINGTALK_BATCH_SIZE": batch_size.get("dingtalk", 20000),
         "FEISHU_BATCH_SIZE": batch_size.get("feishu", 29000),
