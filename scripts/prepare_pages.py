@@ -130,6 +130,7 @@ th,td{padding:10px 12px;border-bottom:1px solid #e2e8f0;text-align:left;overflow
     page += "".join(rows) + '''</tbody></table></div>
 <h2>收集到什么</h2><p>热榜通过 NewsNow 获取标题、排名及原始链接，部分返回数据可能来自上游缓存；没有抓取各平台文章全文。
 Google Trends 美国使用 Google 官方 Trending Now RSS，它是美国地区的近期热搜，不是全球总榜，也不包含完整的关键词历史曲线。
+热搜词链接打开该词的 Google Trends 查询页；本站没有抓取或保存该查询页的历史数据。
 Hacker News 通过 hnrss.org 订阅获取，Ars Technica 使用媒体自有 RSS。雅虎财经默认 RSS 地址因返回 404 已关闭，阮一峰博客保持关闭。</p>
 <h2>筛选与保存</h2><p>关键词区域展示匹配到的条目，RSS 同时启用 1 天的新鲜度过滤。
 Google Trends、GitHub Trending、Hacker News 和 Ars Technica 另外完整展示各源最多 20 条，不受关键词过滤；部分条目可能同时出现在关键词区域。

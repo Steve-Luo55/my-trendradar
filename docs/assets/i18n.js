@@ -47,7 +47,7 @@
         ['panel.frequencyEdit', '频率词编辑', 'Keyword Editing'],
         ['panel.timelineSchedule', '时间线调度', 'Timeline Schedule'],
         ['panel.versionCheck', '版本检测', 'Check Version'],
-        ['panel.readOnly', '只读 (请在左侧编辑)', 'Read-only (edit on the left)'],
+        ['panel.readOnly', '只读（可展开源码编辑）', 'Read-only (open the source panel to edit)'],
     ]);
 
     // ═══════════════════════════════════════
@@ -124,7 +124,7 @@
         ['ctrl.selectRssFeeds', '选择要展示的 RSS 源', 'Select RSS feeds to display'],
 
         // Notification
-        ['ctrl.notificationNote', '推送时间由 timeline.yaml 控制，切换到 timeline.yaml 标签页可可视化编辑调度规则。此处仅配置通知渠道（Telegram / 企业微信等），请在左侧编辑器中修改。', 'Push timing is controlled by timeline.yaml. Switch to the timeline.yaml tab for visual schedule editing. Configure notification channels (Telegram / WeCom, etc.) in the left editor.'],
+        ['ctrl.notificationNote', '本部署的邮件计划为北京时间 08:30、20:30，由 GitHub 工作流控制，调度模板当前未启用。邮件凭据请在 GitHub Secrets 管理。', 'This deployment schedules email at 08:30 and 20:30 Asia/Shanghai in its GitHub workflow. Timeline templates are currently disabled. Manage email credentials in GitHub Secrets.'],
 
         // AI
         ['ctrl.modelName', '模型名称', 'Model Name'],
@@ -535,7 +535,7 @@
         ['common.note', '注意：', 'Note: '],
         ['common.warning', '注意：', 'Warning: '],
         ['common.description', '说明：', 'Description: '],
-        ['common.jumpToEditor', '跳转到左侧编辑器', 'Jump to left editor'],
+        ['common.jumpToEditor', '展开源码并定位', 'Open source at this section'],
     ]);
 
     // ═══════════════════════════════════════

@@ -795,6 +795,7 @@ window.scrollToWordGroupInEditor = function(groupIndex) {
 
     const targetLineIndex = data.wordGroups[groupIndex].startLine;
     if (targetLineIndex === undefined || targetLineIndex === -1) return;
+    if (!document.body.classList.contains('show-source')) window.toggleSourcePanel();
 
     const lines = editor.value.split('\n');
     const lineHeight = EDITOR_LINE_HEIGHT;
@@ -855,6 +856,7 @@ window.scrollToModuleInEditor = function(modKey) {
 
     if (targetLineIndex === -1) return;
 
+    if (!document.body.classList.contains('show-source')) window.toggleSourcePanel();
     // 计算目标位置并滚动
     const lineHeight = EDITOR_LINE_HEIGHT;
     const scrollPosition = targetLineIndex * lineHeight;

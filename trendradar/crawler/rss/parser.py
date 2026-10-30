@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 from email.utils import parsedate_to_datetime
+from urllib.parse import parse_qs, urlencode, urlsplit
 
 try:
     import feedparser
@@ -68,10 +69,20 @@ class RSSParser:
         if feed.bozo and not feed.entries:
             raise ValueError(f"RSS 解析失败 ({feed_url}): {feed.bozo_exception}")
 
+        address = urlsplit(feed_url)
+        google_trends = address.hostname == "trends.google.com" and address.path.rstrip("/") == "/trending/rss"
+        region = parse_qs(address.query).get("geo", [""])[0]
         items = []
         for entry in feed.entries:
             item = self._parse_entry(entry)
             if item:
+                if google_trends:
+                    # Google reuses the feed URL for every topic. A per-query
+                    # destination prevents the URL/GUID indexes merging them.
+                    item.url = "https://trends.google.com/trends/explore?" + urlencode({
+                        "geo": region, "date": "now 1-d", "q": item.title,
+                    })
+                    item.guid = item.url
                 items.append(item)
 
         return items
