@@ -726,7 +726,7 @@ function renderModules() {
         card.id = `module-${mod.key}`;
 
         const header = `
-            <div class="module-header px-4 py-3 flex items-center justify-between cursor-pointer" onclick="scrollToModuleInEditor('${mod.key}')">
+            <div class="module-header px-4 py-3 flex items-center justify-between cursor-pointer" onclick="scrollToModuleInEditor('${mod.key}', ${!mod.editable})">
                 <div class="flex items-center">
                     <span class="text-sm font-bold">${t(mod.nameKey)}</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-blue-400 text-[10px] ml-2 opacity-0 group-hover:opacity-100" title="${t('common.jumpToEditor')}"></i>
@@ -754,12 +754,17 @@ function renderModuleNav() {
     if (!nav) return;
 
     nav.innerHTML = MODULE_DEFS.map(mod => `
-        <button onclick="scrollToModuleInEditor('${mod.key}')"
+        <button onclick="scrollToVisualModule('${mod.key}')"
                 class="module-nav-btn text-[10px] px-2 py-1 rounded ${mod.editable ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'} transition-colors"
                 title="${t(mod.nameKey)}">
             ${mod.id}
         </button>
     `).join('');
+}
+
+window.scrollToVisualModule = function(modKey) {
+    document.getElementById(`module-${modKey}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (document.body.classList.contains('show-source')) window.scrollToModuleInEditor(modKey);
 }
 
 // 切换组名编辑状态
@@ -787,6 +792,7 @@ window.toggleGroupNameEdit = function(btn) {
 
 // 跳转到左侧编辑器中对应词组的位置
 window.scrollToWordGroupInEditor = function(groupIndex) {
+    if (!document.body.classList.contains('show-source')) return;
     const editor = document.getElementById('frequency-editor');
     // 重新解析以确保行号准确
     const data = parseFrequencyText(editor.value);
@@ -795,7 +801,6 @@ window.scrollToWordGroupInEditor = function(groupIndex) {
 
     const targetLineIndex = data.wordGroups[groupIndex].startLine;
     if (targetLineIndex === undefined || targetLineIndex === -1) return;
-    if (!document.body.classList.contains('show-source')) window.toggleSourcePanel();
 
     const lines = editor.value.split('\n');
     const lineHeight = EDITOR_LINE_HEIGHT;
@@ -821,7 +826,11 @@ window.scrollToWordGroupInEditor = function(groupIndex) {
 }
 
 // 跳转到左侧编辑器中对应模块的位置
-window.scrollToModuleInEditor = function(modKey) {
+window.scrollToModuleInEditor = function(modKey, revealSource = false) {
+    if (!document.body.classList.contains('show-source')) {
+        if (!revealSource) return;
+        window.toggleSourcePanel();
+    }
     const editor = document.getElementById('yaml-editor');
     const yaml = editor.value;
     const lines = yaml.split('\n');
@@ -856,7 +865,6 @@ window.scrollToModuleInEditor = function(modKey) {
 
     if (targetLineIndex === -1) return;
 
-    if (!document.body.classList.contains('show-source')) window.toggleSourcePanel();
     // 计算目标位置并滚动
     const lineHeight = EDITOR_LINE_HEIGHT;
     const scrollPosition = targetLineIndex * lineHeight;

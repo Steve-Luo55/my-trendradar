@@ -76,7 +76,7 @@ a{color:inherit}header,main,footer{max-width:1120px;margin:auto;padding:0 28px}h
 <a class="card" href="sources.html"><span class="card-number">03 / COVERAGE</span><h2>了解信源与更新</h2><p>查看接入了什么、尚未覆盖什么，以及采集、邮件和数据保存的实际边界。</p><span class="card-action">查看覆盖说明 →</span></a>
 </section><section class="note"><strong>使用提示</strong>　邮件计划为北京时间早晚各一次，网页另有定时采集；GitHub 的实际触发可能延迟。配置工具中的修改需导出并提交到仓库后生效，邮件凭据仍由 GitHub Secrets 管理。</section></main>
 <footer>个人部署 · 基于 <a href="https://github.com/sansan0/TrendRadar">TrendRadar</a> · GPL-3.0 · <a href="https://github.com/Steve-Luo55/my-trendradar/actions">实际运行记录</a></footer>
-<script>if(/^#tab-\\d+$/.test(location.hash)){location.replace('report/'+location.hash);}</script>
+<script>if(location.hash==='#all'||/^#tab-\\d+$/.test(location.hash)){location.replace('report/'+location.hash);}</script>
 </body></html>'''
     return with_canonical(html, SITE_URL)
 

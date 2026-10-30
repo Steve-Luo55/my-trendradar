@@ -535,7 +535,7 @@
         ['common.note', '注意：', 'Note: '],
         ['common.warning', '注意：', 'Warning: '],
         ['common.description', '说明：', 'Description: '],
-        ['common.jumpToEditor', '展开源码并定位', 'Open source at this section'],
+        ['common.jumpToEditor', '查看对应源码', 'View source for this section'],
     ]);
 
     // ═══════════════════════════════════════
